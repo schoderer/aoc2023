@@ -1,15 +1,5 @@
-pub struct Part1;
+mod part1;
+mod part2;
 
-impl utils::Part for Part1 {
-    type Intermediate = ();
-
-    type Output = u64;
-
-    fn map(&mut self, input: &str) -> Self::Intermediate {
-        todo!()
-    }
-
-    fn reduce(&mut self,input: Vec<Self::Intermediate>) -> Self::Output {
-        todo!()
-    }
-}
+pub use part1::Part1;
+pub use part2::Part2;

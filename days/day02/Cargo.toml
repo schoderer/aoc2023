@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 utils = {workspace = true}
-rayon = {workspace = true}
+
+
 [dev-dependencies]
 criterion = {workspace = true}
