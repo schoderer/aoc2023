@@ -8,6 +8,7 @@ name = "bench"
 harness = false
 
 [dependencies]
+utils = {workspace = true}
 rayon = {workspace = true}
 [dev-dependencies]
 criterion = {workspace = true}

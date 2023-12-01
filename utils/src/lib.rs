@@ -1,14 +1,31 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
+use std::fmt::Display;
+
+
+pub trait Part{
+    type Intermediate;
+    type Output: Display;
+    fn splitter<'a>(&mut self,input: &'a str) -> Vec<&'a str>{
+        input.lines().collect()
+    }
+
+    fn map(&mut self, input: &str) -> Self::Intermediate;
+
+
+    fn reduce(&mut self,input: Vec<Self::Intermediate>) -> Self::Output;
+
+
+    fn run_part(&mut self, input: &str) -> Self::Output{
+        let splitted = self.splitter(input);
+        let mapped = splitted.iter().map(|input| self.map(input)).collect::<Vec<_>>();
+        self.reduce(mapped)
+    }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+pub type AoCResult<T> = Result<T, AoCError>;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+#[derive(Debug, thiserror::Error)]
+pub enum AoCError{
+
+    #[error(transparent)]
+    Other(#[from] anyhow::Error),
 }
