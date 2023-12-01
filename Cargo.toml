@@ -5,5 +5,6 @@ members = [
     "utils"
 ]
 [workspace.dependencies]
+utils = { path = "./utils" }
 rayon = {version = "1.8.0"}
 criterion = { version = "0.5.1", features = ["html_reports"] }

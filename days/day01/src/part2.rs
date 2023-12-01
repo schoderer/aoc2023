@@ -1,4 +1,35 @@
-use rayon::{str::ParallelString, iter::ParallelIterator};
+
+
+pub struct Part2;
+
+
+impl utils::Part for Part2 {
+    type Intermediate = Option<u64>;
+
+    type Output = u64;
+
+    fn map(&mut self, line: &str) -> Self::Intermediate {
+        let (first_word_opt, last_word_opt) = detect_first_and_last_word(line);
+
+
+        let first_digit_opt = find_first_in_iter(line.char_indices());
+        let last_digit_opt = find_first_in_iter(line.char_indices().rev());
+        let values = [first_word_opt, last_word_opt, first_digit_opt, last_digit_opt];
+    
+        let first = values.iter().flatten().min_by_key(|s| s.pos)?;
+        let last = values.iter().flatten().max_by_key(|s| s.pos)?;
+        let total = (first.value * 10) + last.value;
+    
+        Some(total)
+    }
+
+    fn reduce(&mut self,input: Vec<Self::Intermediate>) -> Self::Output {
+        input.iter()
+        .flatten()
+        .sum()
+    }
+}
+
 
 const WORDS: [(&str, usize, u64); 9] = [
     // word, chars in word, value  -- Maybe with const fn?
@@ -50,37 +81,18 @@ fn detect_first_and_last_word(input: &str) -> (Option<Indexed>, Option<Indexed>)
     }
     (first_word, last_word)
 }
-#[inline]
+
 fn find_first_in_iter(mut iter: impl Iterator<Item = (usize, char)>) -> Option<Indexed>{
     let map_to_indexed = |input: (usize, char) | Some(Indexed { pos: input.0, value: (input.1.to_digit(10)?).into() });
     iter.find(|(_, cha)| cha.is_ascii_digit()).and_then(map_to_indexed)
 }
 
-fn map_line(line: &str) -> Option<u64> {
-    let (first_word_opt, last_word_opt) = detect_first_and_last_word(line);
-
-
-    let first_digit_opt = find_first_in_iter(line.char_indices());
-    let last_digit_opt = find_first_in_iter(line.char_indices().rev());
-    let values = [first_word_opt, last_word_opt, first_digit_opt, last_digit_opt];
-
-    let first = values.iter().flatten().min_by_key(|s| s.pos)?;
-    let last = values.iter().flatten().max_by_key(|s| s.pos)?; // double iteration :-(
-    let total = (first.value * 10) + last.value;
-
-    Some(total)
-}
-
-pub fn process(input: &str) -> u64 {
-    input
-        .par_lines()
-        .map(map_line)
-        .map(Option::unwrap_or_default)
-        .sum::<u64>()
-}
 
 #[cfg(test)]
 mod test {
+    use utils::Part;
+
+    use crate::part2::Part2;
     #[test]
     fn sample() {
         let input = r#"two1nine
@@ -91,7 +103,8 @@ mod test {
         zoneight234
         7pqrstsixteen"#;
 
-        let result: u64 = super::process(input);
+        let mut part = Part2;
+        let result: u64 = part.run_part(input);
 
         println!("{result}");
 
@@ -101,7 +114,8 @@ mod test {
     #[test]
     fn main() {
         let input = include_str!("../inputs/day01.txt");
-
-        assert_eq!(54985, super::process(input));
+        let mut part = Part2;
+        let result: u64 = part.run_part(input);
+        assert_eq!(54985, result);
     }
 }
