@@ -1,7 +1,4 @@
-
-
 pub struct Part2;
-
 
 impl utils::Part for Part2 {
     type Intermediate = Option<u64>;
@@ -10,15 +7,9 @@ impl utils::Part for Part2 {
 
     fn map(&mut self, line: &str) -> Self::Intermediate {
         let (first_word_opt, last_word_opt) = detect_first_and_last_word(line);
-
-
-        let first_digit_opt = find_first_in_iter(line.char_indices());
-        let last_digit_opt = find_first_in_iter(line.char_indices().rev());
-        let values = [first_word_opt, last_word_opt, first_digit_opt, last_digit_opt];
-    
-        let first = values.iter().flatten().min_by_key(|s| s.pos)?;
-        let last = values.iter().flatten().max_by_key(|s| s.pos)?;
-        let total = (first.value * 10) + last.value;
+        let first = first_word_opt?.value;
+        let last = last_word_opt?.value;
+        let total = (first * 10) + last;
     
         Some(total)
     }
@@ -29,7 +20,6 @@ impl utils::Part for Part2 {
         .sum()
     }
 }
-
 
 const WORDS: [(&str, usize, u64); 9] = [
     // word, chars in word, value  -- Maybe with const fn?
@@ -49,10 +39,15 @@ pub struct Indexed {
     pub pos: usize,
     pub value: u64,
 }
-fn starts_with_word(input: &str) -> Option<(u64, usize)> {
+fn starts_with_digit_or_word(input: &str) -> Option<(u64, usize)> {
+    let first_char = input.chars().next()?;
+    if first_char.is_ascii_digit(){
+        let digit = first_char.to_digit(10)?.into();
+        return Some((digit, 1)); 
+    }
     for word in WORDS {
         if input.starts_with(word.0) {
-            return Some((word.2, word.1));
+            return Some((word.2, word.1 - 1)); // -1 to dirty skip overlaps
         }
     }
     None
@@ -65,15 +60,16 @@ fn detect_first_and_last_word(input: &str) -> (Option<Indexed>, Option<Indexed>)
     let mut last_word = None;
     while pos < input_len {
         let input = &input[pos..];
-        let increment = match starts_with_word(input) {
-            Some((value, word_size)) => {
+        let digit_in_line = starts_with_digit_or_word(input);
+        let increment = match digit_in_line {
+            Some((value, skip_value)) => {
                 let indexed = Indexed { pos, value };
                 if first_word.is_none(){
                     // since we iterate through, first will get set only once
                     first_word = Some(indexed);
                 }
                 last_word = Some(indexed);
-                word_size - 1
+                skip_value
             }
             None => 1,
         };
@@ -81,12 +77,6 @@ fn detect_first_and_last_word(input: &str) -> (Option<Indexed>, Option<Indexed>)
     }
     (first_word, last_word)
 }
-
-fn find_first_in_iter(mut iter: impl Iterator<Item = (usize, char)>) -> Option<Indexed>{
-    let map_to_indexed = |input: (usize, char) | Some(Indexed { pos: input.0, value: (input.1.to_digit(10)?).into() });
-    iter.find(|(_, cha)| cha.is_ascii_digit()).and_then(map_to_indexed)
-}
-
 
 #[cfg(test)]
 mod test {
