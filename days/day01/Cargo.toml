@@ -1,0 +1,13 @@
+[package]
+name = "day01"
+version = "0.1.0"
+edition = "2021"
+
+[[bench]]
+name = "bench"
+harness = false
+
+[dependencies]
+rayon = {workspace = true}
+[dev-dependencies]
+criterion = {workspace = true}
