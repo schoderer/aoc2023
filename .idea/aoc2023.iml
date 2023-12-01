@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="EMPTY_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/days/day01/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/days/day01/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/days/day02/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/days/day02/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/days/day1/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/days/day1/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/days/day2/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/days/day2/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/utils/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/days/day4/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/days/day4/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
