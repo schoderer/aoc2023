@@ -4,7 +4,11 @@ use utils::Part;
 
 fn criterion_benchmark(c: &mut Criterion) {
     let input = include_str!("../inputs/day2.txt");
-
+    c.bench_function("day2_parser", |b| {
+        b.iter(|| {
+            let _ = parser::parse_game(input);
+        })
+    });
     c.bench_function("day2_part1", |b| {
         b.iter(|| {
             let mut part = Part1;

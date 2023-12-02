@@ -12,7 +12,7 @@ harness = false
 [dependencies]
 nom = {workspace = true}
 utils = {workspace = true}
-
+anyhow = {workspace = true}
 
 [dev-dependencies]
 criterion = {workspace = true}

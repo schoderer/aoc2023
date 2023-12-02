@@ -5,13 +5,15 @@ use nom::character::complete::char;
 use nom::combinator::{all_consuming, map, map_res};
 use nom::multi::separated_list1;
 use nom::sequence::tuple;
-use nom::IResult;
+use nom::{Finish, IResult};
 use std::str::FromStr;
 
-pub fn parse_game(input: &str) -> Result<Game, std::io::Error> {
+pub fn parse_game(input: &str) -> anyhow::Result<Game> {
     let game_parser = tuple((tag("Game "), parse_number, tag(": "), parse_sets));
     let game_parser = map(game_parser, |(_, id, _, sets)| Game { id, sets });
-    let (_, game) = all_consuming(game_parser)(input).unwrap(); //todo real nom error conversion
+    let (_, game) = all_consuming(game_parser)(input)
+        .finish()
+        .map_err(|err| nom::error::Error::new(err.input.to_string(), err.code))?;
     Ok(game)
 }
 

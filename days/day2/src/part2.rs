@@ -8,7 +8,7 @@ impl utils::Part for Part2 {
     type Output = usize;
 
     fn map(&mut self, input: &str) -> Self::Intermediate {
-        parser::parse_game(input).unwrap()
+        parser::parse_game(input).expect("Error during Game parsing")
     }
 
     fn reduce(&mut self, input: Vec<Self::Intermediate>) -> Self::Output {
