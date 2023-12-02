@@ -1,4 +1,4 @@
-use crate::{Game, parser};
+use crate::{parser, Game};
 
 pub struct Part2;
 
@@ -19,7 +19,7 @@ impl utils::Part for Part2 {
 mod tests {
 
     #[test]
-    fn sample_input(){
+    fn sample_input() {
         use utils::Part;
         let input = r#"Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
 Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue

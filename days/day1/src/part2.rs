@@ -14,10 +14,8 @@ impl utils::Part for Part2 {
         Some(total)
     }
 
-    fn reduce(&mut self,input: Vec<Self::Intermediate>) -> Self::Output {
-        input.iter()
-            .flatten()
-            .sum()
+    fn reduce(&mut self, input: Vec<Self::Intermediate>) -> Self::Output {
+        input.iter().flatten().sum()
     }
 }
 
@@ -41,7 +39,7 @@ pub struct Indexed {
 }
 fn starts_with_digit_or_word(input: &str) -> Option<(u64, usize)> {
     let first_char = input.chars().next()?;
-    if first_char.is_ascii_digit(){
+    if first_char.is_ascii_digit() {
         let digit = first_char.to_digit(10)?.into();
         return Some((digit, 1));
     }
@@ -64,7 +62,7 @@ fn detect_first_and_last_word(input: &str) -> (Option<Indexed>, Option<Indexed>)
         let increment = match digit_in_line {
             Some((value, skip_value)) => {
                 let indexed = Indexed { pos, value };
-                if first_word.is_none(){
+                if first_word.is_none() {
                     // since we iterate through, first will get set only once
                     first_word = Some(indexed);
                 }
@@ -83,9 +81,8 @@ mod tests {
     use super::Part2;
     use utils::Part;
 
-
     #[test]
-    fn sample_input(){
+    fn sample_input() {
         let input = r#"two1nine
         eightwothree
         abcone2threexyz

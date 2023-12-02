@@ -1,11 +1,10 @@
+mod parser;
 mod part1;
 mod part2;
-mod parser;
 
-use std::str::FromStr;
 pub use part1::Part1;
 pub use part2::Part2;
-
+use std::str::FromStr;
 
 #[derive(Debug)]
 pub struct Game {
@@ -15,23 +14,22 @@ pub struct Game {
 
 impl Game {
     pub fn minimal_cube_power(&self) -> usize {
-        let group = &self.sets.iter()
+        let cubes = &self
+            .sets
+            .iter()
             .flat_map(|set| &set.cubes)
-            .collect::<Vec<_>>()
-            ;
+            .collect::<Vec<_>>();
         let mut green = None;
         let mut red = None;
         let mut blue = None;
 
-        for (amount, color) in group{
-            match color {
-                Color::Red => red = red.max(Some(*amount)),
-                Color::Blue => blue = blue.max(Some(*amount)),
-                Color::Green => green = green.max(Some(*amount)),
+        for cube in cubes {
+            match cube.color {
+                Color::Red => red = red.max(Some(cube.amount)),
+                Color::Blue => blue = blue.max(Some(cube.amount)),
+                Color::Green => green = green.max(Some(cube.amount)),
             }
-
         }
-
 
         green.unwrap_or_default() * red.unwrap_or_default() * blue.unwrap_or_default()
     }
@@ -45,10 +43,10 @@ pub struct Set {
 impl Set {
     fn is_valid_for(&self, max_red: usize, max_green: usize, max_blue: usize) -> bool {
         for cube in &self.cubes {
-            let is_invalid = match cube.1 {
-                Color::Red => cube.0 > max_red,
-                Color::Green => cube.0 > max_green,
-                Color::Blue => cube.0 > max_blue,
+            let is_invalid = match cube.color {
+                Color::Red => cube.amount > max_red,
+                Color::Green => cube.amount > max_green,
+                Color::Blue => cube.amount > max_blue,
             };
             if is_invalid {
                 return false;
@@ -57,10 +55,13 @@ impl Set {
         true
     }
 }
+#[derive(Debug)]
+pub struct ShownCubes {
+    amount: usize,
+    color: Color,
+}
 
-type ShownCubes = (usize, Color);
-
-#[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
+#[derive(Debug)]
 pub enum Color {
     Red,
     Green,
@@ -75,7 +76,7 @@ impl FromStr for Color {
             "red" => Ok(Color::Red),
             "blue" => Ok(Color::Blue),
             "green" => Ok(Color::Green),
-            _ => Err(()) // better error
+            _ => Err(()), // better error
         }
     }
 }

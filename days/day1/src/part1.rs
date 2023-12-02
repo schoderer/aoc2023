@@ -33,9 +33,8 @@ mod tests {
     use crate::Part1;
     use utils::Part;
 
-
     #[test]
-    fn sample_input(){
+    fn sample_input() {
         let input = r#"1abc2
         pqr3stu8vwx
         a1b2c3d4e5f
