@@ -17,7 +17,7 @@ impl utils::Part for Part1 {
 }
 
 fn is_game_possible(game: &Game) -> bool{
-     game.sets.iter().find(|set| !set.is_valid_for(12, 13, 14)).is_none()
+     !game.sets.iter().any(|set| !set.is_valid_for(12, 13, 14))
 
 }
 #[cfg(test)]

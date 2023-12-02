@@ -16,8 +16,7 @@ pub struct Game {
 impl Game {
     pub fn minimal_cube_power(&self) -> usize {
         let group = &self.sets.iter()
-            .map(|set| &set.cubes)
-            .flatten()
+            .flat_map(|set| &set.cubes)
             .collect::<Vec<_>>()
             ;
         let mut green = None;
