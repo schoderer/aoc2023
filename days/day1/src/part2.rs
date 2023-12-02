@@ -108,6 +108,6 @@ mod tests {
         let mut part = Part2;
 
         let result = part.run_part(input);
-        assert_eq!(54985, 54985);
+        assert_eq!(result, 54985);
     }
 }

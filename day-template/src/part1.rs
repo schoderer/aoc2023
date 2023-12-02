@@ -15,16 +15,14 @@ impl utils::Part for Part1 {
 }
 #[cfg(test)]
 mod tests {
-    use crate::Part1;
-    use utils::Part;
-
 
     #[test]
     fn sample_input(){
+        use utils::Part;
         let input = r#"
         "#;
 
-        let mut part = Part1;
+        let mut part = super::Part1;
 
         let res = part.run_part(input);
 
@@ -33,9 +31,10 @@ mod tests {
 
     #[test]
     fn main() {
+        use utils::Part;
         let input = include_str!("../inputs/{{project-name}}.txt");
 
-        let mut part = Part1;
+        let mut part = super::Part1;
 
         let result = part.run_part(input);
         assert_eq!(9999, result); //todo

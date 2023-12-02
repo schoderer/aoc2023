@@ -22,10 +22,11 @@ mod tests {
 
     #[test]
     fn sample_input(){
+        use utils::Part;
         let input = r#"
         "#;
 
-        let mut part = Part2;
+        let mut part = super::Part2;
 
         let res = part.run_part(input);
 
@@ -34,9 +35,10 @@ mod tests {
 
     #[test]
     fn main() {
+        use utils::Part;
         let input = include_str!("../inputs/{{project-name}}.txt");
 
-        let mut part = Part2;
+        let mut part = super::Part2;
 
         let result = part.run_part(input);
         assert_eq!(res, 999999); //todo
