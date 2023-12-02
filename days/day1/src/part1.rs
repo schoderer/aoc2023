@@ -28,33 +28,33 @@ impl utils::Part for Part1 {
             .sum::<u64>()
     }
 }
-
 #[cfg(test)]
-mod test {
+mod tests {
+    use crate::Part1;
     use utils::Part;
 
+
     #[test]
-    fn sample() {
+    fn sample_input(){
         let input = r#"1abc2
         pqr3stu8vwx
         a1b2c3d4e5f
         treb7uchet"#;
-        let mut part = super::Part1;
 
-        let result: u64 = part.run_part(input);
+        let mut part = Part1;
 
-        println!("{result}");
+        let res = part.run_part(input);
 
-        assert_eq!(result, 142);
+        assert_eq!(res, 142);
     }
 
     #[test]
     fn main() {
-        let input = include_str!("../inputs/day01.txt");
+        let input = include_str!("../inputs/day1.txt");
 
         let mut part = super::Part1;
 
-        let result: u64 = part.run_part(input);
+        let result = part.run_part(input);
         assert_eq!(55130, result);
     }
 }

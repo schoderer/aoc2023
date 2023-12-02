@@ -32,19 +32,18 @@ mod tests {
 Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
 Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
 Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
-Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
-Game 6: 6 red, 1 blue, 14 green; 2 blue, 1 red, 12 green"#;
+Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"#;
 
         let mut part = Part1;
 
         let res = part.run_part(input);
 
-        assert_eq!(res, 14)
+        assert_eq!(res, 8)
     }
 
     #[test]
     fn main() {
-        let input = include_str!("../inputs/day02.txt");
+        let input = include_str!("../inputs/day2.txt");
 
         let mut part = super::Part1;
 

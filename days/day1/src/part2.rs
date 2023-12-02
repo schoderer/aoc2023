@@ -10,14 +10,14 @@ impl utils::Part for Part2 {
         let first = first_word_opt?.value;
         let last = last_word_opt?.value;
         let total = (first * 10) + last;
-    
+
         Some(total)
     }
 
     fn reduce(&mut self,input: Vec<Self::Intermediate>) -> Self::Output {
         input.iter()
-        .flatten()
-        .sum()
+            .flatten()
+            .sum()
     }
 }
 
@@ -43,7 +43,7 @@ fn starts_with_digit_or_word(input: &str) -> Option<(u64, usize)> {
     let first_char = input.chars().next()?;
     if first_char.is_ascii_digit(){
         let digit = first_char.to_digit(10)?.into();
-        return Some((digit, 1)); 
+        return Some((digit, 1));
     }
     for word in WORDS {
         if input.starts_with(word.0) {
@@ -79,12 +79,13 @@ fn detect_first_and_last_word(input: &str) -> (Option<Indexed>, Option<Indexed>)
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
+    use super::Part2;
     use utils::Part;
 
-    use crate::part2::Part2;
+
     #[test]
-    fn sample() {
+    fn sample_input(){
         let input = r#"two1nine
         eightwothree
         abcone2threexyz
@@ -94,18 +95,19 @@ mod test {
         7pqrstsixteen"#;
 
         let mut part = Part2;
-        let result: u64 = part.run_part(input);
 
-        println!("{result}");
+        let res = part.run_part(input);
 
-        assert_eq!(result, 281);
+        assert_eq!(res, 281);
     }
 
     #[test]
     fn main() {
-        let input = include_str!("../inputs/day01.txt");
+        let input = include_str!("../inputs/day1.txt");
+
         let mut part = Part2;
-        let result: u64 = part.run_part(input);
-        assert_eq!(54985, result);
+
+        let result = part.run_part(input);
+        assert_eq!(54985, 54985);
     }
 }

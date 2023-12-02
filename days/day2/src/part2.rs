@@ -17,8 +17,10 @@ impl utils::Part for Part2 {
 }
 
 mod tests {
-    use crate::Part2;
+    #[allow(unused_imports)]
     use utils::Part;
+
+    use super::Part2;
 
 
     #[test]
@@ -38,9 +40,9 @@ Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"#;
 
     #[test]
     fn main() {
-        let input = include_str!("../inputs/day02.txt");
+        let input = include_str!("../inputs/day2.txt");
 
-        let mut part = super::Part2;
+        let mut part = Part2;
 
         let result = part.run_part(input);
         assert_eq!(70768, result);

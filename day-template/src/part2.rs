@@ -13,3 +13,32 @@ impl utils::Part for Part2 {
         todo!()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::Part2;
+    use utils::Part;
+
+
+    #[test]
+    fn sample_input(){
+        let input = r#"
+        "#;
+
+        let mut part = Part2;
+
+        let res = part.run_part(input);
+
+        assert_eq!(res, 999999); //todo
+    }
+
+    #[test]
+    fn main() {
+        let input = include_str!("../inputs/{{project-name}}.txt");
+
+        let mut part = Part2;
+
+        let result = part.run_part(input);
+        assert_eq!(res, 999999); //todo
+    }
+}
