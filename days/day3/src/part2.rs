@@ -1,7 +1,7 @@
-pub struct Part1;
+pub struct Part2;
 
-impl utils::Part for Part1 {
-    type Intermediate = Vec<Part>;
+impl utils::Part for Part2 {
+    type Intermediate = ();
 
     type Output = u64;
 
@@ -13,6 +13,7 @@ impl utils::Part for Part1 {
         todo!()
     }
 }
+
 #[cfg(test)]
 mod tests {
 
@@ -22,21 +23,21 @@ mod tests {
         let input = r#"
         "#;
 
-        let mut part = super::Part1;
+        let mut part = super::Part2;
 
-        let res = part.run_part(input);
+        let result = part.run_part(input);
 
-        assert_eq!(res, 9999); //todo
+        assert_eq!(result, 999999); //todo
     }
 
     #[test]
     fn main() {
         use utils::Part;
-        let input = include_str!("../inputs/{{project-name}}.txt");
+        let input = include_str!("../inputs/day3.txt");
 
-        let mut part = super::Part1;
+        let mut part = super::Part2;
 
         let result = part.run_part(input);
-        assert_eq!(9999, result); //todo
+        assert_eq!(result, 999999); //todo
     }
 }

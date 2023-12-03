@@ -16,9 +16,6 @@ impl utils::Part for Part2 {
 
 #[cfg(test)]
 mod tests {
-    use crate::Part2;
-    use utils::Part;
-
 
     #[test]
     fn sample_input(){
@@ -28,9 +25,9 @@ mod tests {
 
         let mut part = super::Part2;
 
-        let res = part.run_part(input);
+        let result = part.run_part(input);
 
-        assert_eq!(res, 999999); //todo
+        assert_eq!(result, 999999); //todo
     }
 
     #[test]
@@ -41,6 +38,6 @@ mod tests {
         let mut part = super::Part2;
 
         let result = part.run_part(input);
-        assert_eq!(res, 999999); //todo
+        assert_eq!(result, 999999); //todo
     }
 }

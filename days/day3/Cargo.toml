@@ -1,5 +1,5 @@
 [package]
-name = "{{project-name}}"
+name = "day3"
 version = "0.1.0"
 edition = "2021"
 
@@ -11,6 +11,8 @@ harness = false
 
 [dependencies]
 utils = {workspace = true}
+nom = {workspace = true}
+anyhow = {workspace = true}
 
 [dev-dependencies]
 criterion = {workspace = true}
