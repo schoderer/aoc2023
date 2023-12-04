@@ -1,5 +1,5 @@
-use std::str::FromStr;
 use crate::Card;
+use std::str::FromStr;
 
 pub struct Part2;
 
@@ -13,22 +13,27 @@ impl utils::Part for Part2 {
 
     fn reduce(&mut self, input: Vec<Self::Intermediate>) -> Self::Output {
         let mut card_amounts: Vec<usize> = vec![1usize; input.len()];
-        let card_wins: Vec<CardWins> = input.iter().map(|c| CardWins{ card_number: c.number -1, wins: c.wins()}).collect();
+        let card_wins: Vec<CardWins> = input
+            .iter()
+            .map(|c| CardWins {
+                card_number: c.number - 1,
+                wins: c.wins(),
+            })
+            .collect();
         for win in card_wins {
             let card_num = win.card_number;
             let original_card_amount = *card_amounts.get(card_num).unwrap();
-            for i in 1..=win.wins{
-                if let Some(card_amount) = card_amounts.get_mut(card_num + i){
+            for i in 1..=win.wins {
+                if let Some(card_amount) = card_amounts.get_mut(card_num + i) {
                     *card_amount += original_card_amount
                 }
-
             }
         }
         card_amounts.iter().sum()
     }
 }
 
-pub struct CardWins{
+pub struct CardWins {
     card_number: usize,
     wins: usize,
 }
@@ -37,7 +42,7 @@ pub struct CardWins{
 mod tests {
 
     #[test]
-    fn sample_input(){
+    fn sample_input() {
         use utils::Part;
         let input = r#"Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
 Card 2: 13 32 20 16 61 | 61 30 68 82 17 32 24 19
@@ -52,8 +57,6 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11"#;
 
         assert_eq!(res, 30);
     }
-
-
 
     #[test]
     fn main() {
