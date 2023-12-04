@@ -16,7 +16,8 @@ pub struct Card{
 impl Card{
     pub fn score(&self) -> usize{
         let mut score = 0;
-        for _ in 0..=self.wins(){
+        let wins = self.wins();
+        for _ in 1..=wins{
             if score == 0{
                 score = 1;
             }else {
@@ -27,9 +28,9 @@ impl Card{
         score
     }
 
-    fn wins(&self) -> usize {
-        self.own_numbers.iter()
-            .filter(|num| self.winning_numbers.contains(*num))
+    pub fn wins(&self) -> usize {
+        self.winning_numbers.iter()
+            .filter(|num| self.own_numbers.contains(*num))
             .count()
     }
 }
@@ -38,37 +39,41 @@ impl FromStr for Card{
     type Err = anyhow::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        parser::parse(s)
+        let (_, card) = parser::parse(s).unwrap();
+        Ok(card)
     }
 }
 
 mod parser {
     use std::str::FromStr;
     use nom::bytes::complete::{tag, take_while};
-    use nom::character::complete::digit1;
+    use nom::character::complete::{digit1};
     use nom::combinator::{map, map_res};
-    use nom::{Finish, IResult};
-    use nom::multi::{separated_list0, separated_list1};
+    use nom::{IResult};
+    use nom::multi::{separated_list0};
     use nom::sequence::tuple;
     use crate::Card;
 
-    pub fn parse(input: &str) -> anyhow::Result<Card>{
-
-        let card_parser = tuple((parse_card_number, parse_number_list, take_spaces, tag("|"), take_spaces, parse_number_list));
-        let mut card_mapper = map(card_parser, |(number, winning_numbers, _, _, _, own_numbers)| Card{number, winning_numbers, own_numbers});
-        let (_, card) = card_mapper(input)
-            .finish()
-            .map_err(|err| nom::error::Error::new(err.input.to_string(), err.code))?;
-        Ok(card)
-
+    pub fn parse(input: &str) -> nom::IResult<&str, Card>{
+        let (input, number) = parse_card_number(input)?;
+        let (input, _) = take_spaces(input)?;
+        let (input, winning_numbers) = parse_number_list(input)?;
+        let (input, _) = tag(" | ")(input)?;
+        let (input, _) = take_while(|c| c == ' ')(input)?;
+        let (input, own_numbers) = parse_number_list(input)?;
+        Ok((input, Card{
+            number,
+            winning_numbers,
+            own_numbers
+        }))
     }
 
     fn parse_card_number(input: &str) -> IResult<&str, usize>{
-        map_res(tuple((tag("Card"), take_spaces, digit1, tag(": "))), |(_, _, num, _)|  usize::from_str(num))(input)
+        map(tuple((tag("Card"), take_spaces, map_res(digit1, usize::from_str), tag(":"))), |(_, _, num, _)| num)(input)
     }
 
     fn parse_number_list(input: &str) -> IResult<&str, Vec<usize>>{
-        separated_list0(take_spaces, parse_digit)(input)
+        separated_list0(tag(" "), parse_digit)(input)
     }
 
     fn take_spaces(input: &str) -> IResult<&str, &str>{
@@ -76,6 +81,7 @@ mod parser {
     }
 
     fn parse_digit(input: &str) -> IResult<&str, usize>{
+        let (input, _) = take_spaces(input)?;
         map_res(digit1, usize::from_str)(input)
     }
 
