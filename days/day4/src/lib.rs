@@ -47,27 +47,20 @@ mod parser {
     use crate::Card;
     use nom::bytes::complete::{tag, take_while};
     use nom::character::complete::digit1;
-    use nom::combinator::{map, map_res};
+    use nom::combinator::{all_consuming, map, map_res};
     use nom::multi::separated_list0;
     use nom::sequence::tuple;
     use nom::IResult;
     use std::str::FromStr;
 
     pub fn parse(input: &str) -> nom::IResult<&str, Card> {
-        let (input, number) = parse_card_number(input)?;
-        let (input, _) = take_spaces(input)?;
-        let (input, winning_numbers) = parse_number_list(input)?;
-        let (input, _) = tag(" | ")(input)?;
-        let (input, _) = take_while(|c| c == ' ')(input)?;
-        let (input, own_numbers) = parse_number_list(input)?;
-        Ok((
-            input,
-            Card {
-                number,
-                winning_numbers,
-                own_numbers,
-            },
-        ))
+        let line_parser = tuple((parse_card_number,  parse_number_list, tag(" | "), parse_number_list));
+        let game_card_parser = map(line_parser, |(number, winning_numbers, _, own_numbers)| Card{
+            number,
+            winning_numbers,
+            own_numbers
+        });
+        all_consuming(game_card_parser)(input)
     }
 
     fn parse_card_number(input: &str) -> IResult<&str, usize> {
