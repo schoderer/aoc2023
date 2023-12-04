@@ -12,17 +12,19 @@ impl utils::Part for Part2 {
     }
 
     fn reduce(&mut self, input: Vec<Self::Intermediate>) -> Self::Output {
-        let mut map: rustc_hash::FxHashMap<usize, usize> =input.iter().map(|card| (card.number, 1usize)).collect();
-        let card_wins: Vec<CardWins> = input.iter().map(|c| CardWins{ card_number: c.number, wins: c.wins()}).collect();
+        let mut card_amounts: Vec<usize> = vec![1usize; input.len()];
+        let card_wins: Vec<CardWins> = input.iter().map(|c| CardWins{ card_number: c.number -1, wins: c.wins()}).collect();
         for win in card_wins {
             let card_num = win.card_number;
-            let original_card_amount = *map.get(&card_num).unwrap();
+            let original_card_amount = *card_amounts.get(card_num).unwrap();
             for i in 1..=win.wins{
-                map.entry(card_num + i)
-                    .and_modify(|amount| *amount += original_card_amount);
+                if let Some(card_amount) = card_amounts.get_mut(card_num + i){
+                    *card_amount += original_card_amount
+                }
+
             }
         }
-        map.values().sum()
+        card_amounts.iter().sum()
     }
 }
 
