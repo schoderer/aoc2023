@@ -40,7 +40,7 @@ mod tests {
 
         let mut part = super::Part2;
 
-        let result = part.run_part(input);
+        let res = part.run_part(input);
         assert_eq!(res, 999999); //todo
     }
 }
