@@ -52,7 +52,7 @@ mod tests {
 
         let res = part.run_part(input);
 
-        assert_eq!(res, 71503); //todo
+        assert_eq!(res, 71503);
     }
 
     #[test]
@@ -63,6 +63,6 @@ mod tests {
         let mut part = super::Part2;
 
         let res = part.run_part(input);
-        assert_eq!(res, 999999); //todo
+        assert_eq!(res, 45128024); 
     }
 }
