@@ -33,7 +33,7 @@ fn calc_distance(charge_time: usize, max_time: usize) -> usize{
 }
 
 pub mod parser{
-    use nom::{bytes::complete::{tag, take_while}, character::complete::{line_ending, digit1}, IResult, sequence::tuple, multi::{separated_list0, many1, many0}, combinator::{map_res, all_consuming}, branch::alt};
+    use nom::{bytes::complete::{tag, take_while}, character::complete::{line_ending, digit1}, IResult, sequence::tuple, multi::separated_list0, combinator::map_res};
 
     use crate::Rounds;
 
