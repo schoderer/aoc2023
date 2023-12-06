@@ -43,11 +43,6 @@ pub mod parser{
         res
     }
 
-
-/*
-Time:        54     70     82     75
-Distance:   239   1142   1295   1253
- */
     fn parse_nom(input: &str) -> IResult<&str, Vec<Rounds>>{
         let (input, (_, times, _)) = tuple((tag("Time:"), parse_number_list, line_ending))(input)?;
         let (input, (_,_, distance)) = tuple((take_spaces, tag("Distance:"), parse_number_list))(input)?;

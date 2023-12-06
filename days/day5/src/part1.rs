@@ -1,15 +1,26 @@
+use crate::GardenEq;
+
 pub struct Part1;
 
 impl utils::Part for Part1 {
-    type Intermediate = ();
+    type Intermediate = GardenEq;
 
     type Output = u64;
 
-    fn map(&mut self, _input: &str) -> Self::Intermediate {
-        todo!()
+    fn run_part(&mut self, input: &str) -> Self::Output {
+        let res = self.map(input);
+        let res = self.reduce(vec![res]);
+        res
     }
 
-    fn reduce(&mut self, _input: Vec<Self::Intermediate>) -> Self::Output {
+    fn map(&mut self, input: &str) -> Self::Intermediate {
+        let res = crate::parser::parse(input).unwrap();
+        res
+    }
+
+    fn reduce(&mut self, input: Vec<Self::Intermediate>) -> Self::Output {
+        let input = input.into_iter().next().unwrap();
+
         todo!()
     }
 }
@@ -17,7 +28,7 @@ impl utils::Part for Part1 {
 mod tests {
 
     #[test]
-    fn sample_input(){
+    fn sample_input() {
         use utils::Part;
         let input = r#"seeds: 79 14 55 13
 
