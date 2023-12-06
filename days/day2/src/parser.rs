@@ -1,6 +1,6 @@
 use crate::{Color, Game, Set, ShownCubes};
 use nom::branch::alt;
-use nom::bytes::complete::{tag, take_while};
+use nom::bytes::complete::{tag};
 use nom::character::complete::{char, digit1};
 use nom::combinator::{all_consuming, map, map_res};
 use nom::multi::separated_list1;
@@ -46,10 +46,6 @@ fn parse_color(input: &str) -> IResult<&str, Color> {
 
 fn parse_number(input: &str) -> IResult<&str, usize> {
     map_res(digit1, usize::from_str)(input)
-}
-
-fn is_digit(c: char) -> bool {
-    c.is_ascii_digit()
 }
 
 #[cfg(test)]
